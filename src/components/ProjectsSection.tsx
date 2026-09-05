@@ -38,10 +38,10 @@ export const ProjectsSection: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <a
                         className="inline-flex items-baseline font-semibold leading-tight text-slate-lightest hover:text-teal focus-visible:text-teal group/link text-lg"
-                        href={project.githubUrl || '#'}
+                        href={project.liveUrl || '#'}
                         target="_blank"
                         rel="noreferrer noopener"
-                        aria-label={`${project.title}`}
+                        aria-label={`${project.title} live deployment`}
                       >
                         <span className="absolute -inset-x-4 -inset-y-2.5 hidden rounded md:-inset-x-6 md:-inset-y-4 lg:block" />
                         <span>
