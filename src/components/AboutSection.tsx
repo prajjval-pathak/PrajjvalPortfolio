@@ -65,11 +65,17 @@ export const AboutSection: React.FC = () => {
         </div>
 
         <div className="about-photo-frame order-1 mx-auto w-full max-w-[15rem] lg:order-2 lg:mt-2 lg:max-w-none">
-          <img
-            src="/images/prajjval-pathak.png"
-            alt="Prajjval Pathak"
-            className="about-photo"
-          />
+          <picture>
+            <source
+              media="(max-width: 1023px)"
+              srcSet="/images/prajjval-pathak-portrait.png"
+            />
+            <img
+              src="/images/prajjval-pathak.png"
+              alt="Prajjval Pathak"
+              className="about-photo"
+            />
+          </picture>
         </div>
       </div>
     </section>
