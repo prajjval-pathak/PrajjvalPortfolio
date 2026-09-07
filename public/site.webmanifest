@@ -1,0 +1,21 @@
+{
+  "name": "Prajjval Pathak | Software Developer 2 at Oracle",
+  "short_name": "Prajjval Pathak",
+  "description": "Portfolio of Prajjval Pathak, Software Developer 2 at Oracle specializing in C# .NET, React, and cloud architectures.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a192f",
+  "theme_color": "#0a192f",
+  "icons": [
+    {
+      "src": "/images/prajjval-pathak.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/prajjval-pathak.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

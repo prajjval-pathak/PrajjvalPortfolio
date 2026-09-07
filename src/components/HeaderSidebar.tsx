@@ -1,28 +1,31 @@
-import React from 'react';
-import { portfolioData } from '../data/portfolioData';
-import { Mail, ArrowUpRight } from 'lucide-react';
-import { GithubIcon, LinkedinIcon, LeetCodeIcon } from './Icons';
+import React from "react";
+import { portfolioData } from "../data/portfolioData";
+import { Mail, ArrowUpRight } from "lucide-react";
+import { GithubIcon, LinkedinIcon, LeetCodeIcon } from "./Icons";
 
 interface HeaderSidebarProps {
   activeSection: string;
   onOpenResumeModal: () => void;
 }
 
-export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ activeSection, onOpenResumeModal }) => {
+export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({
+  activeSection,
+  onOpenResumeModal,
+}) => {
   const { personal } = portfolioData;
 
   const navItems = [
-    { id: 'about', label: 'ABOUT' },
-    { id: 'experience', label: 'EXPERIENCE' },
-    { id: 'projects', label: 'PROJECTS' },
-    { id: 'skills-certifications', label: 'SKILLS & CERTS' },
-    { id: 'education', label: 'EDUCATION' },
+    { id: "about", label: "ABOUT" },
+    { id: "experience", label: "EXPERIENCE" },
+    { id: "projects", label: "PROJECTS" },
+    { id: "skills-certifications", label: "SKILLS & CERTS" },
+    { id: "education", label: "EDUCATION" },
   ];
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
@@ -31,7 +34,10 @@ export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ activeSection, onO
       <div>
         {/* Name & Title */}
         <h1 className="text-4xl font-extrabold tracking-tight text-slate-lightest sm:text-5xl">
-          <a href="#" className="hover:text-teal transition-colors duration-200">
+          <a
+            href="/"
+            className="hover:text-teal transition-colors duration-200"
+          >
             {personal.name}
           </a>
         </h1>
@@ -67,15 +73,15 @@ export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ activeSection, onO
                     <span
                       className={`nav-indicator mr-4 h-px transition-all duration-300 motion-reduce:transition-none ${
                         isActive
-                          ? 'w-16 bg-teal'
-                          : 'w-8 bg-slate-dark group-hover:w-16 group-hover:bg-slate-lightest'
+                          ? "w-16 bg-teal"
+                          : "w-8 bg-slate-dark group-hover:w-16 group-hover:bg-slate-lightest"
                       }`}
                     />
                     <span
                       className={`text-xs font-mono font-bold tracking-widest uppercase transition-colors duration-200 ${
                         isActive
-                          ? 'text-teal'
-                          : 'text-slate group-hover:text-slate-lightest'
+                          ? "text-teal"
+                          : "text-slate group-hover:text-slate-lightest"
                       }`}
                     >
                       {item.label}
@@ -98,7 +104,10 @@ export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({ activeSection, onO
           <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
         </button>
 
-        <ul className="ml-1 flex items-center gap-5 text-slate" aria-label="Social media">
+        <ul
+          className="ml-1 flex items-center gap-5 text-slate"
+          aria-label="Social media"
+        >
           <li>
             <a
               className="block hover:text-teal hover:-translate-y-1 transition-all duration-200"

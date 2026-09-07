@@ -33,7 +33,10 @@ export const AboutSection: React.FC = () => {
         <div className="order-2 space-y-5 text-base leading-relaxed text-slate lg:order-1">
           <p>
             I’m Prajjval, a full-stack software developer who builds
-            <span className="about-highlight"> scalable enterprise platforms</span>
+            <span className="about-highlight">
+              {" "}
+              scalable enterprise platforms
+            </span>
             , resilient cloud backends, and thoughtful web experiences. I’m
             currently a Software Developer 2 at
             <span className="about-highlight"> Oracle</span>.
@@ -72,8 +75,10 @@ export const AboutSection: React.FC = () => {
             />
             <img
               src="/images/prajjval-pathak.png"
-              alt="Prajjval Pathak"
+              alt="Prajjval Pathak — Software Developer 2 at Oracle"
+              title="Prajjval Pathak — Software Developer 2 at Oracle"
               className="about-photo"
+              loading="eager"
             />
           </picture>
         </div>

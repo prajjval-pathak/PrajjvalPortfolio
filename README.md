@@ -51,3 +51,26 @@ npm run preview
 
 All content, social links, project repositories, and experiences can be updated directly in [`src/data/portfolioData.ts`](./src/data/portfolioData.ts).
 
+---
+
+## 🔍 SEO & Search Engine Optimization
+
+The portfolio is fully optimized for top search rankings on Google, Bing, and other search engines for queries like **"Prajjval Pathak"**, **"Prajjval Pathak Oracle"**, and related technical skills.
+
+### Key SEO Enhancements
+
+1. **Schema.org JSON-LD Structured Data**: Embedded `Person`, `WebSite`, and `ProfilePage` graphs linking your Oracle role, alma mater, skills, and social profiles (LinkedIn, GitHub, LeetCode) to establish your personal entity knowledge graph.
+2. **Social Graph Meta Tags**: Rich Open Graph (OG) and Twitter Card tags for high-converting link previews on LinkedIn, Twitter/X, Discord, Slack, and WhatsApp.
+3. **Search Crawlability**:
+   - `public/robots.txt` allowing indexing and pointing to the sitemap.
+   - `public/sitemap.xml` for fast search bot discovery.
+   - `public/site.webmanifest` for mobile PWA indexing signals.
+   - `<noscript>` fallback with full semantic content for search bots that do not execute client-side JavaScript.
+
+### How to Submit to Google for Fast Indexing
+
+1. Deploy the site to your production domain or hosting service (e.g. Vercel, Netlify, GitHub Pages, or custom domain).
+2. Go to [Google Search Console](https://search.google.com/search-console/).
+3. Add your domain property and verify ownership.
+4. Go to **Sitemaps** in the left menu and submit `sitemap.xml` (e.g. `https://yourdomain.com/sitemap.xml`).
+5. Use the **URL Inspection** tool to request immediate indexing of your root URL.
