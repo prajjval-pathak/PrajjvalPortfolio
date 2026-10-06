@@ -42,9 +42,13 @@ export const portfolioData = {
     email: "prajjvalpathak@gmail.com",
     phone: "+91-8827849718",
     location: "Bengaluru / Indore, India",
+    resumeUrl:
+      "https://drive.google.com/file/d/1VPOfpJJ3SzIY6GWe-tCgzGWyeyE-Tna6/view",
+    resumeEmbedUrl:
+      "https://drive.google.com/file/d/1VPOfpJJ3SzIY6GWe-tCgzGWyeyE-Tna6/preview",
     social: {
-      github: "https://github.com/prajjvalpathak",
-      linkedin: "https://linkedin.com/in/prajjvalpathak",
+      github: "https://github.com/prajjval-pathak",
+      linkedin: "https://www.linkedin.com/in/prajjval-pathak-292658190",
       leetcode: "https://leetcode.com/u/prajjvalpathak",
       email: "mailto:prajjvalpathak@gmail.com",
     },

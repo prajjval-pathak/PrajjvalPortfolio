@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+  import { useState, useEffect } from "react";
 import { SpotlightEffect } from "./components/SpotlightEffect";
 import { HeaderSidebar } from "./components/HeaderSidebar";
 import { AboutSection } from "./components/AboutSection";
