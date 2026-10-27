@@ -1,16 +1,18 @@
 import React from "react";
 import { portfolioData } from "../data/portfolioData";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { Mail, ArrowUpRight, BookOpen } from "lucide-react";
 import { GithubIcon, LinkedinIcon, LeetCodeIcon } from "./Icons";
 
 interface HeaderSidebarProps {
   activeSection: string;
   onOpenResumeModal: () => void;
+  onNavigateToLearnings?: () => void;
 }
 
 export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({
   activeSection,
   onOpenResumeModal,
+  onNavigateToLearnings,
 }) => {
   const { personal } = portfolioData;
 
@@ -90,19 +92,53 @@ export const HeaderSidebar: React.FC<HeaderSidebarProps> = ({
                 </li>
               );
             })}
+
+            {/* Direct Jump to Learnings */}
+            {onNavigateToLearnings && (
+              <li>
+                <button
+                  onClick={onNavigateToLearnings}
+                  className="group flex items-center py-1 text-left focus:outline-none"
+                >
+                  <span className="nav-indicator mr-4 h-px w-8 bg-slate-dark group-hover:w-16 group-hover:bg-teal transition-all duration-300 motion-reduce:transition-none" />
+                  <span className="text-xs font-mono font-bold tracking-widest uppercase transition-colors duration-200 text-slate group-hover:text-teal flex items-center gap-2">
+                    <span>LEARNINGS</span>
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-teal"></span>
+                    </span>
+                  </span>
+                </button>
+              </li>
+            )}
           </ul>
         </nav>
       </div>
 
-      {/* Social Links & Resume Button */}
+      {/* Social Links & Action Buttons */}
       <div className="mt-8 flex flex-col gap-6">
-        <button
-          onClick={onOpenResumeModal}
-          className="group inline-flex items-center gap-2 w-fit px-4 py-2 text-xs font-mono font-semibold tracking-wider text-teal border border-teal/40 rounded hover:bg-teal/10 transition-all duration-200"
-        >
-          <span>VIEW RESUME</span>
-          <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-        </button>
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={onOpenResumeModal}
+            className="group inline-flex items-center gap-2 px-4 py-2 text-xs font-mono font-semibold tracking-wider text-teal border border-teal/40 rounded hover:bg-teal/10 transition-all duration-200"
+          >
+            <span>VIEW RESUME</span>
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </button>
+
+          {onNavigateToLearnings && (
+            <button
+              onClick={onNavigateToLearnings}
+              className="group inline-flex items-center gap-2 px-3.5 py-2 text-xs font-mono font-semibold tracking-wider text-slate-lightest border border-slate-dark/50 bg-navy-card/60 rounded hover:border-teal/60 hover:text-teal hover:bg-teal/10 transition-all duration-200"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-teal" />
+              <span>LEARNINGS</span>
+              <span className="rounded bg-teal/20 px-1.5 py-0.2 text-[9px] text-teal font-bold">
+                6 NOTES
+              </span>
+            </button>
+          )}
+        </div>
 
         <ul
           className="ml-1 flex items-center gap-5 text-slate"
