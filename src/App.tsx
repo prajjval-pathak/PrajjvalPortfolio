@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { SpotlightEffect } from "./components/SpotlightEffect";
 import { HeaderSidebar } from "./components/HeaderSidebar";
 import { AboutSection } from "./components/AboutSection";
@@ -8,14 +8,26 @@ import { SkillsCertificationsSection } from "./components/SkillsCertificationsSe
 import { EducationSection } from "./components/EducationSection";
 import { Footer } from "./components/Footer";
 import { ResumeModal } from "./components/ResumeModal";
-import { LearningsPage } from "./components/learnings/LearningsPage";
 import { BookOpen, ArrowRight } from "lucide-react";
 
+const LearningsPage = lazy(() =>
+  import("./components/learnings/LearningsPage").then((m) => ({
+    default: m.LearningsPage,
+  }))
+);
+
+const AdminPortal = lazy(() =>
+  import("./components/admin/AdminPortal").then((m) => ({
+    default: m.AdminPortal,
+  }))
+);
+
 export function App() {
-  const [view, setView] = useState<"portfolio" | "learnings">(() => {
-    return window.location.hash.startsWith("#learnings")
-      ? "learnings"
-      : "portfolio";
+  const [view, setView] = useState<"portfolio" | "learnings" | "admin">(() => {
+    const hash = window.location.hash;
+    if (hash.startsWith("#admin")) return "admin";
+    if (hash.startsWith("#learnings")) return "learnings";
+    return "portfolio";
   });
   const [activeSection, setActiveSection] = useState<string>("about");
   const [isResumeOpen, setIsResumeOpen] = useState<boolean>(false);
@@ -23,7 +35,10 @@ export function App() {
   // Sync route with URL hash
   useEffect(() => {
     const handleHashChange = () => {
-      if (window.location.hash.startsWith("#learnings")) {
+      const hash = window.location.hash;
+      if (hash.startsWith("#admin")) {
+        setView("admin");
+      } else if (hash.startsWith("#learnings")) {
         setView("learnings");
       } else {
         setView("portfolio");
@@ -69,8 +84,8 @@ export function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [view]);
 
-  const handleNavigateToLearnings = () => {
-    window.location.hash = "#learnings";
+  const handleNavigateToLearnings = (slug?: string) => {
+    window.location.hash = slug ? `#learnings/${slug}` : "#learnings";
     setView("learnings");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -86,8 +101,29 @@ export function App() {
       {/* Background Cursor Glow Spotlight */}
       <SpotlightEffect />
 
-      {view === "learnings" ? (
-        <LearningsPage onBackToPortfolio={handleBackToPortfolio} />
+      {view === "admin" ? (
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-navy flex items-center justify-center text-teal font-mono text-xs animate-pulse">
+              Loading Admin Studio...
+            </div>
+          }
+        >
+          <AdminPortal
+            onBackToPortfolio={handleBackToPortfolio}
+            onNavigateToLearnings={handleNavigateToLearnings}
+          />
+        </Suspense>
+      ) : view === "learnings" ? (
+        <Suspense
+          fallback={
+            <div className="min-h-screen bg-navy flex items-center justify-center text-teal font-mono text-xs animate-pulse">
+              Loading Learnings & Tech Notes...
+            </div>
+          }
+        >
+          <LearningsPage onBackToPortfolio={handleBackToPortfolio} />
+        </Suspense>
       ) : (
         <div className="mx-auto min-h-screen max-w-screen-xl px-6 py-12 font-sans md:px-12 md:py-20 lg:px-24 lg:py-0">
           <div className="lg:flex lg:justify-between lg:gap-12">
@@ -102,7 +138,7 @@ export function App() {
             <main id="content" className="pt-20 lg:w-1/2 lg:py-24">
               {/* Digital Garden / Learnings Highlight Banner */}
               <div
-                onClick={handleNavigateToLearnings}
+                onClick={() => handleNavigateToLearnings()}
                 role="button"
                 tabIndex={0}
                 onKeyDown={(e) => {

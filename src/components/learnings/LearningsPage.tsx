@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { learningArticles, LearningArticle } from "../../data/learningsData";
+import { learningsService } from "../../services/learningsService";
 import { LearningsList } from "./LearningsList";
 import { LearningArticleView } from "./LearningArticleView";
 
@@ -12,7 +13,21 @@ export const LearningsPage: React.FC<LearningsPageProps> = ({
   onBackToPortfolio,
   initialSlug,
 }) => {
+  const [articles, setArticles] = useState<LearningArticle[]>(learningArticles);
   const [selectedSlug, setSelectedSlug] = useState<string | null>(initialSlug || null);
+
+  // Load latest articles from Supabase / localStorage on mount
+  useEffect(() => {
+    let isMounted = true;
+    learningsService.getAllLearnings().then((data) => {
+      if (isMounted && data && data.length > 0) {
+        setArticles(data);
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   // Sync with URL hash
   useEffect(() => {
@@ -42,7 +57,8 @@ export const LearningsPage: React.FC<LearningsPageProps> = ({
   };
 
   const currentArticle: LearningArticle | undefined = selectedSlug
-    ? learningArticles.find((a) => a.slug === selectedSlug)
+    ? articles.find((a) => a.slug === selectedSlug) ||
+      learningArticles.find((a) => a.slug === selectedSlug)
     : undefined;
 
   if (selectedSlug && currentArticle) {
@@ -57,6 +73,7 @@ export const LearningsPage: React.FC<LearningsPageProps> = ({
 
   return (
     <LearningsList
+      articles={articles}
       onSelectArticle={handleSelectArticle}
       onBackToPortfolio={onBackToPortfolio}
     />
