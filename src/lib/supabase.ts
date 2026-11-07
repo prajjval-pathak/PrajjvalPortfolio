@@ -4,6 +4,13 @@ import { createClient, SupabaseClient } from "@supabase/supabase-js";
 const STORAGE_URL_KEY = "prajjval_portfolio_supabase_url";
 const STORAGE_ANON_KEY = "prajjval_portfolio_supabase_anon_key";
 
+function cleanSupabaseUrl(raw: string): string {
+  let cleaned = raw.trim();
+  cleaned = cleaned.replace(/\/rest\/v1\/?$/, "");
+  cleaned = cleaned.replace(/\/+$/, "");
+  return cleaned;
+}
+
 export function getSupabaseCredentials(): { url: string; anonKey: string } {
   const envUrl = import.meta.env.VITE_SUPABASE_URL || "";
   const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY || "";
@@ -12,8 +19,8 @@ export function getSupabaseCredentials(): { url: string; anonKey: string } {
   const storedKey = typeof window !== "undefined" ? localStorage.getItem(STORAGE_ANON_KEY) || "" : "";
 
   return {
-    url: envUrl || storedUrl,
-    anonKey: envKey || storedKey,
+    url: cleanSupabaseUrl(envUrl || storedUrl),
+    anonKey: (envKey || storedKey).trim(),
   };
 }
 
