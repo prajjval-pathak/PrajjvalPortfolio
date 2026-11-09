@@ -100,7 +100,129 @@ export const LEARNING_CATEGORIES: LearningCategoryMeta[] = [
 ];
 
 export const learningArticles: LearningArticle[] = [
-  // 1. LLD ARTICLE
+  // 1. LLD ARTICLE: FILE SYSTEM DESIGN
+  {
+    slug: "lld-filesystem-design-facade-composite-patterns",
+    title: "LLD: File System Design — The Facade & Composite Pattern Synergy",
+    category: "LLD",
+    date: "Nov 2026",
+    readTime: "6 min read",
+    difficulty: "Intermediate",
+    summary:
+      "How to architect an extensible in-memory File System using the Facade and Composite design patterns. Learn why isolating tree mechanics behind a clean facade eliminates tight coupling and simplifies path-based operations.",
+    tags: ["LLD", "Design Patterns", "Facade Pattern", "Composite Pattern", "System Design", "TypeScript"],
+    keyTakeaways: [
+      "A Facade provides a simplified, single entry-point interface that shields callers from internal tree traversal and node management.",
+      "Without a Facade, client code must manually walk tree nodes, validate collisions, and manage parent-child pointers.",
+      "The Composite Pattern structures the hierarchy uniformly, allowing Files (leaves) and Folders (containers) to inherit from a common FileSystemEntry.",
+      "Synergy: Composite manages the structural relationships, while the FileSystem Facade orchestrates operations via intuitive string paths.",
+    ],
+    sections: [
+      {
+        id: "facade-pattern-overview",
+        title: "1. What is a Facade? Real-World Analogy",
+        paragraphs: [
+          "In software design, a Facade is a structural design pattern that provides a simplified, single entry-point interface to a complex set of underlying classes, subsystems, or data structures.",
+          "Think of an architected building: behind the walls, you have complex electrical wiring, plumbing, and HVAC systems. Instead of interacting with individual pipes and wires directly, you interact with a light switch or a thermostat. That switch is the facade.",
+        ],
+        callout: {
+          type: "architecture",
+          title: "Core Design Principle",
+          text: "Principle of Least Knowledge (Law of Demeter): The consumer of a FileSystem shouldn't know how tree traversal, path parsing, or pointer wiring works internally.",
+        },
+      },
+      {
+        id: "what-makes-filesystem-a-facade",
+        title: "2. What Makes FileSystem a Facade?",
+        paragraphs: [
+          "Without the FileSystem class, anyone consuming your code would have to manually coordinate tree nodes (Folder, File, and FileSystemEntry):",
+        ],
+        codeSnippet: {
+          language: "typescript",
+          title: "Without Facade (Complex & Tightly Coupled)",
+          code: `// ❌ WITHOUT A FACADE (Client has to manage all internal tree mechanics)
+const segments = "/home/user/notes.txt".split("/").filter(Boolean);
+let current = rootFolder;
+
+// Client manually walks the tree:
+for (let i = 0; i < segments.length - 1; i++) {
+  const child = current.getChild(segments[i]);
+  if (!child || !child.isFolder()) throw new Error("Invalid path");
+  current = child as Folder;
+}
+
+// Client manually checks collisions, instantiates nodes, and wires parents:
+const fileName = segments[segments.length - 1];
+if (current.hasChild(fileName)) throw new Error("File already exists");
+
+const newFile = new File(fileName, current, "Hello world");
+current.addChild(newFile);`,
+        },
+        postDiagramParagraphs: [
+          "With the FileSystem facade in place, all that internal complexity is hidden behind one intuitive call:",
+        ],
+        subsections: [
+          {
+            id: "with-facade-call",
+            title: "With a Facade: Single Intuitive Call",
+            codeSnippet: {
+              language: "typescript",
+              title: "With Facade (Clean & Declarative)",
+              code: `// ✅ WITH A FACADE (Clean, single entry point)
+fs.createFile("/home/user/notes.txt", "Hello world");`,
+            },
+          },
+        ],
+      },
+      {
+        id: "facade-responsibilities",
+        title: "3. Key Responsibilities of the FileSystem Facade",
+        paragraphs: [
+          "The FileSystem facade acts as a protective boundary, abstracting multiple critical mechanics away from the outside world:",
+        ],
+        bulletPoints: [
+          "Path String Parsing: Splitting /a/b/c, filtering redundant slashes, and resolving edge cases like root / or relative paths.",
+          "Tree Traversal: Step-by-step navigation down intermediate Folder nodes with validation.",
+          "Object Lifecycle: Instantiating File and Folder instances and setting two-way parent/child pointers.",
+          "Integrity Checks: Preventing cyclic moves (moving a folder inside its own subtree) and throwing typed errors (NotAFolderError, NotFoundError).",
+          "Single Root Management: Holding the reference to root: Folder so callers never need to track or pass around the root node.",
+        ],
+        callout: {
+          type: "tip",
+          title: "Error Handling & Edge Cases",
+          text: "By encapsulating traversal inside the facade, you can guarantee that operations either succeed completely or fail with clear domain exceptions without leaving orphaned tree nodes.",
+        },
+      },
+      {
+        id: "facade-vs-composite",
+        title: "4. Facade vs. Composite Pattern Synergy",
+        paragraphs: [
+          "These two structural design patterns work together seamlessly to power modern file systems:",
+        ],
+        diagram: `[Client / Caller]
+       │
+       ▼
+┌───────────────────────────┐
+│    FileSystem (FACADE)    │  <-- Simplifies operations, parses paths, coordinates tree
+└─────────────┬─────────────┘
+              │
+              ▼
+┌───────────────────────────┐
+│     COMPOSITE PATTERN     │  <-- Manages hierarchical tree relationships
+│                           │
+│     FileSystemEntry       │
+│        ▲        ▲         │
+│        │        │         │
+│      File     Folder      │
+└───────────────────────────┘`,
+        bulletPoints: [
+          "Composite Pattern (FileSystemEntry, File, Folder): Structures the tree so that leaves (File) and containers (Folder) can be treated uniformly by polymorphism.",
+          "Facade Pattern (FileSystem): Wraps that entire tree structure and exposes high-level, string-path-based methods (createFile, createFolder, readFile, move, delete) to the consumer.",
+        ],
+      },
+    ],
+  },
+  // 2. LLD ARTICLE: RATE LIMITER
   {
     slug: "designing-scalable-rate-limiter-csharp-lld",
     title: "Designing a Scalable Rate Limiter in C# & Redis (LLD)",

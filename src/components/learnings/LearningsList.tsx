@@ -16,21 +16,26 @@ import {
   Database,
 } from "lucide-react";
 import {
-  learningArticles,
+  LearningArticle,
   LEARNING_CATEGORIES,
+  learningArticles,
 } from "../../data/learningsData";
 
 interface LearningsListProps {
+  articles?: LearningArticle[];
   onSelectArticle: (slug: string) => void;
   onBackToPortfolio: () => void;
 }
 
 export const LearningsList: React.FC<LearningsListProps> = ({
+  articles,
   onSelectArticle,
   onBackToPortfolio,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const allArticles = articles || learningArticles;
 
   // Category Icon helper
   const getCategoryIcon = (catId: string) => {
@@ -54,7 +59,7 @@ export const LearningsList: React.FC<LearningsListProps> = ({
 
   // Filtered articles based on search & category
   const filteredArticles = useMemo(() => {
-    return learningArticles.filter((article) => {
+    return allArticles.filter((article) => {
       const matchesCategory =
         selectedCategory === "ALL" || article.category === selectedCategory;
 
@@ -92,7 +97,7 @@ export const LearningsList: React.FC<LearningsListProps> = ({
           </div>
 
           <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-slate">
-            <span className="text-teal font-semibold">{learningArticles.length}</span> Notes Published
+            <span className="text-teal font-semibold">{allArticles.length}</span> Notes Published
           </div>
         </div>
       </header>
@@ -128,7 +133,7 @@ export const LearningsList: React.FC<LearningsListProps> = ({
             <div className="rounded-lg border border-slate-dark/30 bg-navy-card/40 p-4">
               <span className="text-xs font-mono text-slate">CURATED ARTICLES</span>
               <div className="mt-1 text-2xl font-bold font-mono text-slate-lightest">
-                {learningArticles.length} Notes
+                {allArticles.length} Notes
               </div>
             </div>
             <div className="rounded-lg border border-slate-dark/30 bg-navy-card/40 p-4">
@@ -176,12 +181,12 @@ export const LearningsList: React.FC<LearningsListProps> = ({
               }`}
             >
               <span>ALL TOPICS</span>
-              <span className="text-[10px] opacity-80">({learningArticles.length})</span>
+              <span className="text-[10px] opacity-80">({allArticles.length})</span>
             </button>
 
             {LEARNING_CATEGORIES.map((cat) => {
               const isSelected = selectedCategory === cat.id;
-              const count = learningArticles.filter((a) => a.category === cat.id).length;
+              const count = allArticles.filter((a) => a.category === cat.id).length;
 
               return (
                 <button

@@ -35,6 +35,18 @@ export const Footer: React.FC = () => {
         </a>
         . Rendered in the Inter and Fira Code typefaces.
       </p>
+
+      {/* Subtle Studio Link for Prajjval */}
+      <div className="mt-6 flex items-center justify-between text-[11px] text-slate-dark/60 font-mono">
+        <span>© {new Date().getFullYear()} Prajjval Pathak</span>
+        <a
+          href="#admin"
+          className="hover:text-teal transition-colors opacity-30 hover:opacity-100 flex items-center gap-1"
+          title="Admin Publishing Studio"
+        >
+          <span>Studio 🔒</span>
+        </a>
+      </div>
     </footer>
   );
 };
